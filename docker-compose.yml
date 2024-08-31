@@ -1,10 +1,10 @@
-version: '3.8'
+
 
 services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/metrics
       SPRING_DATASOURCE_USERNAME: postgres
@@ -12,6 +12,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - db
+    networks:
+      - data-excel-template-app-networks
 
   db:
     image: postgres:15
@@ -23,6 +25,19 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - data-excel-template-app-networks
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "9095:8080"
+    networks:
+      - data-excel-template-app-networks
+    restart: unless-stopped
+
 
 volumes:
   postgres_data:
+networks:
+  data-excel-template-app-networks:

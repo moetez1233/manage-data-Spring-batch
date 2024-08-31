@@ -3,7 +3,7 @@ FROM maven:3.8.4-openjdk-17-slim
 ADD target/data_excel.jar data_excel.jar
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 8000
 
 # Command to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "data_excel.jar"]

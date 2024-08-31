@@ -1,36 +1,30 @@
-package exportDataExcel.dataExcel_api.models;
+package exportDataExcel.dataExcel_api.dto;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.security.Timestamp;
 import java.util.Date;
 
-@Entity
-@Table
-public class Metric {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class MetricDto{
     private String nameUsine;
-    private String created_at;
-    //@Enumerated(EnumType.STRING)
     private String typeMetric;
     private String device;
     private Double value;
+    private String created_at;
 
-    public Metric() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public MetricDto() {
     }
 
 
+    public String getTypeMetric() {
+        return typeMetric;
+    }
 
+    public void setTypeMetric(String typeMetric) {
+        this.typeMetric = typeMetric;
+    }
 
     public String getDevice() {
         return device;
@@ -54,14 +48,6 @@ public class Metric {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
-    }
-
-    public String getTypeMetric() {
-        return typeMetric;
-    }
-
-    public void setTypeMetric(String typeMetric) {
-        this.typeMetric = typeMetric;
     }
 
     public String getNameUsine() {
