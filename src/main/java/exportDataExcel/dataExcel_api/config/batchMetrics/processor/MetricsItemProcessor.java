@@ -1,11 +1,9 @@
-package exportDataExcel.dataExcel_api.batchMetrics.processor;
+package exportDataExcel.dataExcel_api.config.batchMetrics.processor;
 
 import exportDataExcel.dataExcel_api.dto.MetricDto;
 import exportDataExcel.dataExcel_api.mapper.MetricMapper;
 import exportDataExcel.dataExcel_api.models.Metric;
-import org.hibernate.validator.constraints.CodePointLength;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

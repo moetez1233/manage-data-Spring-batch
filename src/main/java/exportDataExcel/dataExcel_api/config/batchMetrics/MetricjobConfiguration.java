@@ -1,7 +1,7 @@
-package exportDataExcel.dataExcel_api.batchMetrics;
+package exportDataExcel.dataExcel_api.config.batchMetrics;
 
 
-import exportDataExcel.dataExcel_api.batchMetrics.processor.MetricsItemProcessor;
+import exportDataExcel.dataExcel_api.config.batchMetrics.processor.MetricsItemProcessor;
 import exportDataExcel.dataExcel_api.dto.MetricDto;
 import exportDataExcel.dataExcel_api.models.Metric;
 import exportDataExcel.dataExcel_api.repositories.MetricRepository;
@@ -12,7 +12,6 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.LineMapper;
@@ -25,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @EnableBatchProcessing
