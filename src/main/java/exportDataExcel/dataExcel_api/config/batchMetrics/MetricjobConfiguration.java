@@ -44,7 +44,7 @@ public class MetricjobConfiguration {
     public FlatFileItemReader<MetricDto> readerCsv() {
 
         FlatFileItemReader<MetricDto> itemReader = new FlatFileItemReader<>();
-        itemReader.setResource(new FileSystemResource("src/main/resources/data/metrics.csv"));
+        itemReader.setResource(new FileSystemResource("src/main/resources/data/camelOut/metrics.csv"));
         itemReader.setName("csvReader");
         itemReader.setLinesToSkip(1);
         itemReader.setLineMapper(lineMapper());
