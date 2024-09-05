@@ -1,5 +1,7 @@
 package exportDataExcel.dataExcel_api.controllers;
 
+import com.mailjet.client.errors.MailjetException;
+import exportDataExcel.dataExcel_api.config.emails.EmailService;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -23,6 +25,8 @@ public class MetricsController {
     private JobLauncher jobLauncher;
     @Autowired
     private Job job;
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/importMetrics")
     public ResponseEntity<String> importMetricsCsv() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
@@ -31,6 +35,10 @@ public class MetricsController {
 
         jobLauncher.run(job,jobParameters);
         return new ResponseEntity<>("success import",HttpStatus.OK);
+    }
+    @GetMapping("/sendEmail")
+    public ResponseEntity<String> sendEmail() throws MailjetException {
+        return new ResponseEntity<>(emailService.sendEmail(),HttpStatus.OK);
     }
 
     @GetMapping
