@@ -5,15 +5,19 @@ import exportDataExcel.dataExcel_api.config.batchMetrics.processor.MetricsItemPr
 import exportDataExcel.dataExcel_api.dto.MetricDto;
 import exportDataExcel.dataExcel_api.models.Metric;
 import exportDataExcel.dataExcel_api.repositories.MetricRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.SkipListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.core.step.skip.SkipPolicy;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -24,9 +28,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
+
 @Configuration
 @EnableBatchProcessing
+@Transactional
 public class MetricjobConfiguration {
 
     private JobBuilder jobBuilder;
@@ -84,7 +93,11 @@ public class MetricjobConfiguration {
                 .reader(readerCsv())
                 .processor(metricsItemProcessor)
                 .writer(itemWriter())
-                .taskExecutor(taskExecutor())
+                .faultTolerant()
+                //.skipLimit(100)
+                //.skip(FlatFileParseException.class)
+                .listener(skipListener())
+                .skipPolicy(skipPolicy())
                 .build();
     }
     @Bean
@@ -100,5 +113,14 @@ public class MetricjobConfiguration {
         asyncTaskExecutor.setConcurrencyLimit(10);
         return asyncTaskExecutor;
     }
+
+    @Bean
+    public SkipPolicy skipPolicy(){
+        return new ExceptionSkipPolicy();
+    }
+    public SkipListener skipListener(){
+        return new StepSkipListener();
+    }
+
 
 }

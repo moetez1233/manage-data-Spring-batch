@@ -6,9 +6,13 @@ import exportDataExcel.dataExcel_api.models.Metric;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class MetricsItemProcessor implements ItemProcessor<MetricDto, Metric> {
     private final MetricMapper metricMapper;
+    List<String> names= new ArrayList<>();
 
     public MetricsItemProcessor(MetricMapper metricMapper) {
         this.metricMapper = metricMapper;
@@ -16,6 +20,12 @@ public class MetricsItemProcessor implements ItemProcessor<MetricDto, Metric> {
 
     @Override
     public Metric process(MetricDto m) throws Exception {
-        return m.getTypeMetric() != null ?metricMapper.toMetric(m) : null;
+        if(names.contains(m.getNameUsine())){
+            return null;
+        }else{
+            names.add(m.getNameUsine());
+            return metricMapper.toMetric(m);
+        }
+
     }
 }

@@ -71,4 +71,16 @@ public class Metric {
     public void setNameUsine(String nameUsine) {
         this.nameUsine = nameUsine;
     }
+
+    @Override
+    public String toString() {
+        return "Metric{" +
+                "id=" + id +
+                ", nameUsine='" + nameUsine + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", typeMetric='" + typeMetric + '\'' +
+                ", device='" + device + '\'' +
+                ", value=" + value +
+                '}';
+    }
 }
