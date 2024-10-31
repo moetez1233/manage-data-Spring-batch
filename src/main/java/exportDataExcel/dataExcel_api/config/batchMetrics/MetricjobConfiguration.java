@@ -96,8 +96,8 @@ public class MetricjobConfiguration {
                 .faultTolerant()
                 //.skipLimit(100)
                 //.skip(FlatFileParseException.class)
-                .listener(skipListener())
                 .skipPolicy(skipPolicy())
+                .listener(skipListener())
                 .build();
     }
     @Bean
